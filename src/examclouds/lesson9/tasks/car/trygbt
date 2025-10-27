@@ -1,0 +1,156 @@
+// Базовый класс Person
+class Person {
+    protected String fullName;
+    protected int drivingExperience; // стаж вождения в годах
+
+    public Person(String fullName, int drivingExperience) {
+        this.fullName = fullName;
+        this.drivingExperience = drivingExperience;
+    }
+
+    @Override
+    public String toString() {
+        return "ФИО: " + fullName + ", стаж вождения: " + drivingExperience + " лет";
+    }
+}
+
+// Класс Driver расширяет Person
+class Driver extends Person {
+    public Driver(String fullName, int drivingExperience) {
+        super(fullName, drivingExperience);
+    }
+}
+
+// Класс Engine
+class Engine {
+    private int power; // мощность
+    private String manufacturer; // производитель
+
+    public Engine(int power, String manufacturer) {
+        this.power = power;
+        this.manufacturer = manufacturer;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    @Override
+    public String toString() {
+        return "Мощность: " + power + " л.с., Производитель: " + manufacturer;
+    }
+}
+
+// Базовый класс Car
+class Car {
+    protected String brand; // марка автомобиля
+    protected String carClass; // класс автомобиля
+    protected double weight; // вес
+    protected Driver driver; // водитель
+    protected Engine engine; // двигатель
+
+    public Car(String brand, String carClass, double weight, Driver driver, Engine engine) {
+        this.brand = brand;
+        this.carClass = carClass;
+        this.weight = weight;
+        this.driver = driver;
+        this.engine = engine;
+    }
+
+    public void start() {
+        System.out.println("Поехали");
+    }
+
+    public void stop() {
+        System.out.println("Останавливаемся");
+    }
+
+    public void turnRight() {
+        System.out.println("Поворот направо");
+    }
+
+    public void turnLeft() {
+        System.out.println("Поворот налево");
+    }
+
+    @Override
+    public String toString() {
+        return "Марка: " + brand + ", Класс: " + carClass + ", Вес: " + weight + " кг\n" +
+                "Водитель: [" + driver.toString() + "]\n" +
+                "Двигатель: [" + engine.toString() + "]";
+    }
+}
+
+// Производный класс Lorry (грузовик)
+class Lorry extends Car {
+    private double payloadCapacity; // грузоподъемность кузова
+
+    public Lorry(String brand, String carClass, double weight, Driver driver, Engine engine, double payloadCapacity) {
+        super(brand, carClass, weight, driver, engine);
+        this.payloadCapacity = payloadCapacity;
+    }
+
+    public double getPayloadCapacity() {
+        return payloadCapacity;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nГрузоподъемность: " + payloadCapacity + " кг";
+    }
+}
+
+// Производный класс SportCar
+class SportCar extends Car {
+    private int maxSpeed; // предельная скорость
+
+    public SportCar(String brand, String carClass, double weight, Driver driver, Engine engine, int maxSpeed) {
+        super(brand, carClass, weight, driver, engine);
+        this.maxSpeed = maxSpeed;
+    }
+
+    public int getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nМаксимальная скорость: " + maxSpeed + " км/ч";
+    }
+}
+
+// Демонстрация использования
+public class Main {
+    public static void main(String[] args) {
+        // Создаем драйвера
+        Driver driver = new Driver("Иванов Иван Иванович", 10);
+        // Создаем двигатель
+        Engine engine = new Engine(200, "Toyota");
+        // Создаем обычную машину
+        Car car = new Car("Toyota", "Седан", 1500, driver, engine);
+        System.out.println(car);
+        car.start();
+        car.turnRight();
+        car.stop();
+        System.out.println();
+
+        // Создаем грузовик
+        Lorry lorry = new Lorry("Volvo", "Грузовик", 8000, driver, new Engine(400, "Volvo"), 20000);
+        System.out.println(lorry);
+        lorry.start();
+        lorry.turnLeft();
+        lorry.stop();
+        System.out.println();
+
+        // Создаем спортивный автомобиль
+        SportCar sportCar = new SportCar("Ferrari", "Купе", 1400, driver, new Engine(500, "Ferrari"), 300);
+        System.out.println(sportCar);
+        sportCar.start();
+        sportCar.turnRight();
+        sportCar.stop();
+    }
+}

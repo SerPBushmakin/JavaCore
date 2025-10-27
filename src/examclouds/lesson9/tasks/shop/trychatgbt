@@ -1,0 +1,113 @@
+// Класс Товар
+class Product {
+    String name;
+    double price;
+    double rating;
+
+    public Product(String name, double price, double rating) {
+        this.name = name;
+        this.price = price;
+        this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Товар: %s | Цена: %.2f | Рейтинг: %.1f", name, price, rating);
+    }
+}
+
+// Класс Категория
+class Category {
+    String name;
+    Product[] products;
+
+    public Category(String name, Product[] products) {
+        this.name = name;
+        this.products = products;
+    }
+
+    // Метод для вывода каталога категории
+    public void printCatalog() {
+        System.out.println("Категория: " + name);
+        for (Product p : products) {
+            System.out.println("  " + p);
+        }
+    }
+}
+
+// Класс Basket (Корзина)
+class Basket {
+    Product[] purchasedProducts;
+
+    public Basket(Product[] purchasedProducts) {
+        this.purchasedProducts = purchasedProducts;
+    }
+
+    public void printPurchases() {
+        if (purchasedProducts == null || purchasedProducts.length == 0) {
+            System.out.println("Покупки отсутствуют");
+            return;
+        }
+        System.out.println("Покупки:");
+        for (Product p : purchasedProducts) {
+            System.out.println("  " + p);
+        }
+    }
+}
+
+// Класс User
+class User {
+    String login;
+    String password;
+    Basket basket;
+
+    public User(String login, String password, Basket basket) {
+        this.login = login;
+        this.password = password;
+        this.basket = basket;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Создаем товары
+        Product p1 = new Product("Телевизор", 25000.0, 4.5);
+        Product p2 = new Product("Холодильник", 30000.0, 4.7);
+        Product p3 = new Product("Ноутбук", 45000.0, 4.8);
+        Product p4 = new Product("Мышь", 1500.0, 4.2);
+        Product p5 = new Product("Клавиатура", 2500.0, 4.3);
+
+        // Создаем категории
+        Category electronics = new Category("Электроника", new Product[]{p1, p2, p3});
+        Category accessories = new Category("Аксессуары", new Product[]{p4, p5});
+
+        // Создаем корзины для пользователей
+        Basket basket1 = new Basket(new Product[]{p1, p4});
+        Basket basket2 = new Basket(new Product[]{p2, p3, p5});
+
+        // Создаем пользователей
+        User user1 = new User("ivan", "pass123", basket1);
+        User user2 = new User("mari", "qwerty", basket2);
+
+        // Вывод каталога
+        System.out.println("Каталог товаров:");
+        electronics.printCatalog();
+        accessories.printCatalog();
+
+        System.out.println("\nПокупки посетителей:");
+        System.out.println(user1.login + ":");
+        user1.basket.printPurchases();
+
+        System.out.println();
+        System.out.println(user2.login + ":");
+        user2.basket.printPurchases();
+    }
+}
+
+Объяснение:
+
+Класс Product содержит переменные name, price, rating. В методе toString() реализовано удобное отображение товара.
+Класс Category содержит название и массив товаров, а также метод для вывода своих товаров.
+Класс Basket содержит массив купленных товаров и метод для их вывода.
+Класс User содержит логин, пароль и объект Basket.
+В методе main() создаются несколько товаров, категорий, пользователи и их корзины, а также выводится описание каталога и покупок.
